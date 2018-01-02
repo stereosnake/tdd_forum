@@ -1,0 +1,4 @@
+valet start
+mysql -uroot
+mysqld
+./vendor/bin/phpunit
