@@ -15,21 +15,18 @@ class CreateThreadsTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->thread = make('App\Thread');
     }
 
     /** @test */
     function guest_may_not_create_threads()
     {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $this->withExceptionHandling();
+        $this->get(Thread::CREATE_PATH)
+            ->assertRedirect('/login');
 
-        $this->post('/threads', $this->thread->toArray());
-    }
-
-    /** @test */
-    function guests_cannot_see_the_create_thread_page()
-    {
-        $this->withExceptionHandling()->get(Thread::CREATE_PATH)->assertRedirect('login');
+        $thread = make('App\Thread');
+        $this->post('/threads', $thread->toArray())
+            ->assertRedirect('/login');
     }
 
     /** @test */
@@ -38,11 +35,12 @@ class CreateThreadsTest extends TestCase
         //given i am an logged in user
         $this->signIn();
         //when i create a new thread
+        $thread = create('App\Thread');
 
-        $this->post('/threads', $this->thread->toArray());
+        $this->post('/threads', $thread->toArray());
         //then i should see a new thread page
-        $this->get($this->thread->path())
-            ->assertSee($this->thread->title)
-            ->assertSee($this->thread->body);
+        $this->get($thread->path())
+            ->assertSee($thread->title)
+            ->assertSee($thread->body);
     }
 }
