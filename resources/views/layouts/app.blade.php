@@ -13,7 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body style="padding-bottom: 100px;">
+<body st>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
