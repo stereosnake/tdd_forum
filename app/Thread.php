@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Thread extends Model
 {
     protected $guarded = [];
+
+    protected $with = ['creator', 'channel'];
+
     const CREATE_PATH = '/threads/create';
 
     protected static function boot()
